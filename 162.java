@@ -1,5 +1,6 @@
 //Find peak of an array in logn
-
+//copy this code to leetcode problem 162
+// https://leetcode.com/problems/find-peak-element/
 class Solution {
     public int findPeakElement(int[] nums) {
         if(nums.length==1)
