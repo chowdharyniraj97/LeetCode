@@ -109,3 +109,36 @@ class Solution {
 }
 
 //-------------------------------------------------------------------------------------------
+
+//Variation of dp but much faster than the previous one
+
+class Solution {
+    public int mincostTickets(int[] days, int[] costs) {
+        
+            int travelday[]=new int[366];
+        
+        for(int d: days)
+            travelday[d]++;
+        int last=days[days.length-1];
+        int dp[]=new int[last+1];
+        int bestcostsofar=0;
+        
+        for(int i=dp.length-1;i>=days[0];i--){
+            if(travelday[i]==1){
+                int a=i+1<dp.length?costs[0]+dp[i+1]: costs[0];
+                int b= i+7<dp.length?costs[1]+dp[i+7] : costs[1];
+                int c= i+30<dp.length? costs[2]+dp[i+30] : costs[2];
+                dp[i]=Math.min(a,Math.min(b,c));
+                bestcostsofar=dp[i];
+            }
+            
+            else{
+                dp[i]=bestcostsofar;
+            }
+        }
+        return dp[days[0]];
+        
+        
+    }
+}
+//----------------------------------------------------
