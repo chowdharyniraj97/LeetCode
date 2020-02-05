@@ -1,7 +1,7 @@
 //983. Minimum Cost For Tickets
 //copy any of the code to the leetcode problem number 983
 //https://leetcode.com/problems/minimum-cost-for-tickets/
-//two version one is recursion other is dynamic programming
+//three version one is recursion other two are dynamic programming
 
 class Solution {
     int global=Integer.MAX_VALUE;
