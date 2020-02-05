@@ -1,6 +1,7 @@
 //983. Minimum Cost For Tickets
-//copy this code to the leetcode problem number 983
-
+//copy any of the code to the leetcode problem number 983
+//https://leetcode.com/problems/minimum-cost-for-tickets/
+//two version one is recursion other is dynamic programming
 
 class Solution {
     int global=Integer.MAX_VALUE;
@@ -47,3 +48,64 @@ class Solution {
             
     }
 }
+
+
+// DP VERSION Better than above recursion
+
+//------------------------------------------------------------------------------
+
+class Solution {
+    public int mincostTickets(int[] days, int[] costs) {
+        
+        int travelday[]=new int[366];
+        
+        
+        for(int d: days)// to know which dates person travel
+            travelday[d]=1;
+        
+        int dp[]=new int[days[days.length-1]+1];
+        
+        dp[days[days.length-1]]=costs[0];
+        
+        for(int i=dp.length-2;i>=1;i--){
+            boolean day_7=false;
+            boolean day_30=false;
+
+            if(travelday[i]==1){
+                
+                    int a=costs[0]+dp[i+1];
+                    int b=i+7<=dp.length-1?costs[1]+dp[i+7]:costs[1];
+                    int c=i+30<=dp.length-1? costs[2]+dp[i+30]: costs[2];
+                    dp[i]=Math.min(a,Math.min(b,c));
+            }
+                
+            else{
+                 for(int j=i;j<i+7;j++)
+                   if(j<366 && travelday[j]==1)
+                       day_7=true;
+                
+                  for(int j=i;j<i+30;j++)
+                      if(j<366 && travelday[j]==1)
+                          day_30=true;
+                
+                
+                int a=dp[i+1];
+                int b=Integer.MAX_VALUE;
+                int c=b;
+                
+                   if(day_7)
+                   b=i+7<dp.length?costs[1]+dp[i+7]: costs[1];
+                   
+                        
+                 if(day_30)
+                     c=i+30<dp.length? costs[2]+dp[i+30]:costs[2];
+                   
+                    dp[i]=Math.min(a,Math.min(b,c));
+            }
+            
+        }
+        return dp[1];
+    }
+}
+
+//-------------------------------------------------------------------------------------------
