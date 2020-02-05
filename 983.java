@@ -3,6 +3,7 @@
 //https://leetcode.com/problems/minimum-cost-for-tickets/
 //three version one is recursion other two are dynamic programming
 
+//runs in 3ms
 class Solution {
     int global=Integer.MAX_VALUE;
     Map<Integer,Integer>map;
@@ -53,7 +54,7 @@ class Solution {
 // DP VERSION Better than above recursion
 
 //------------------------------------------------------------------------------
-
+//runs in 2ms
 class Solution {
     public int mincostTickets(int[] days, int[] costs) {
         
@@ -111,7 +112,7 @@ class Solution {
 //-------------------------------------------------------------------------------------------
 
 //Variation of dp but much faster than the previous one
-
+//runs in 1ms
 class Solution {
     public int mincostTickets(int[] days, int[] costs) {
         
