@@ -1,7 +1,7 @@
 // copy the below soltuion to leetcode problem 650
 //https://leetcode.com/problems/2-keys-keyboard/
 
-//Naive approach
+
 
 class Solution {
     public int minSteps(int n) {
