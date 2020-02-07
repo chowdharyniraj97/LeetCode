@@ -1,6 +1,6 @@
 // copy the below soltuion to leetcode problem 650
 //https://leetcode.com/problems/2-keys-keyboard/
-
+// recursive + DP solution
 
 
 class Solution {
@@ -36,5 +36,26 @@ class Solution {
             return a+2;
         else
             return Math.min(2+a,1+b);
+    }
+}
+
+//---------------------------------------------Dp Solution ---------------------------------------------------
+
+class Solution{
+     
+public int minSteps(int n) {
+        int[] dp = new int[n+1];
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = i;
+            for (int j = i-1; j > 1; j--) {
+                if (i % j == 0) {
+                    dp[i] = dp[j] + (i/j);
+                    break;
+                }
+                
+            }
+        }
+        return dp[n];
     }
 }
