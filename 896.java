@@ -43,6 +43,18 @@ class Solution {
         return false;
     }
 }
-
+//------------------------------------------------------------------------------------
+// O(n) soltuion clears all test cases
+class Solution{
+    public boolean isMonotonic(int[] A) {
+    boolean isIncreasing = true, isDecreasing = true;
+    for(int i=1; i<A.length; i++) {
+        if(!isIncreasing && !isDecreasing) return false; 
+        if(isIncreasing && A[i-1]>A[i]) isIncreasing = false;
+        if(isDecreasing && A[i-1]<A[i]) isDecreasing = false;
+    }
+    return isIncreasing || isDecreasing;
+}
+}
 
 
