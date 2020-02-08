@@ -69,3 +69,83 @@ class Solution {
         
     }
 }
+
+
+//Still suffers from TLE but speed increases a little bit
+class Solution {
+    StringBuilder ans;
+    int min=Integer.MAX_VALUE;
+    HashMap<StringBuilder,Boolean> map;
+    public String minRemoveToMakeValid(String s) {
+        ans=new StringBuilder("");
+        map=new HashMap<>();
+        if(!isValid(s.toCharArray())){
+            StringBuilder sb=new StringBuilder(s);
+             findsmallestdrop(sb,0,0);
+            System.out.println(min);
+            return ans.toString();
+        }
+        return s;
+    }
+             
+    
+    public void findsmallestdrop(StringBuilder s,int sg,int steps){
+        for(int i=0;i<s.length();i++){
+            
+            char c=s.charAt(i);
+            if(c=='(' || c==')')
+            {
+                boolean isval=false;
+                if(map.containsKey(s))
+                    isval=map.get(s);
+                else{
+                isval=isValid(s.toString().toCharArray());
+                map.put(s,isval);
+                }
+                
+                if(!isval){
+                    StringBuilder temp=new StringBuilder(s);
+                    if(steps+1<min)
+                            findsmallestdrop(temp.delete(i,i+1),i,steps+1);
+                }
+                else{
+                    
+                    if(steps<min)
+                    {
+                        //System.out.println(min);
+                        ans=new StringBuilder(s);
+                        min=steps;
+                        return;
+                    }
+                }
+            }
+           
+       }
+     
+    }
+    
+    
+    
+    public boolean isValid(char ch[]){
+        Stack<Integer> st=new Stack<>();
+        st.push(-1);
+        int i=0;
+        for(char c : ch){
+            if(c=='(')
+                st.push(i);
+            else if(c==')')
+            {
+                if(st.peek()==-1)
+                    return false;
+                else
+                    st.pop();
+            }
+            i++;
+        }
+        if(st.peek()==-1)
+        return true;
+        return false;
+        
+        
+    }
+} 
