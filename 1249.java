@@ -149,3 +149,40 @@ class Solution {
         
     }
 } 
+
+//-----------------------------------------------------Linear solution------------------------------------------------
+
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        Stack<Integer> st=new Stack<>();
+        StringBuilder sb=new StringBuilder("");
+        HashSet<Integer> set=new HashSet<>();
+        int open=0;
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            
+            if(c=='('){
+                open++;
+                st.push(i);
+            }
+            else if(c==')'){
+                if(open==0){
+                    set.add(i);
+                    continue;
+                }
+                st.pop();
+                open--;
+
+            }
+    }
+        while(!st.isEmpty()){
+            set.add(st.pop());
+        }
+      
+        for(int i=0;i<s.length();i++){
+            if(!set.contains(i))
+                sb.append(s.charAt(i));
+        }
+        return sb.toString();
+}
+}
