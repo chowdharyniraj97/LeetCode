@@ -1,4 +1,5 @@
 /*package whatever //do not write package name here */
+// Copy either of the code to https://practice.geeksforgeeks.org/problems/minimum-sum-partition/0
 // ------------------------------recursive way--------------------------------------------------------------------------
 import java.util.*;
 import java.lang.*;
