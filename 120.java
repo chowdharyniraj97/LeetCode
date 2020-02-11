@@ -70,3 +70,35 @@ class Solution {
             
     }
 }
+
+//===========================================================DP===========================================================
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        for(int i=1;i<triangle.size();i++) { 
+            List<Integer> current=triangle.get(i);
+            List<Integer> prev=triangle.get(i-1);
+            int j=0;
+           for(int ele : current){
+              
+              if(j==0)
+                  current.set(j,ele+prev.get(j));
+              else if(j==current.size()-1)
+                  current.set(j,ele+prev.get(j-1));
+               else{
+                   int x=Math.min(prev.get(j-1),prev.get(j));
+                   current.set(j,ele+x);
+                   
+            }
+               j++;
+          }
+        }
+        
+        List<Integer>last=triangle.get(triangle.size()-1);
+        int min=Integer.MAX_VALUE;
+        for(int i: last){
+            min=Math.min(min,i);
+        }
+        return min;
+        
+    }
+}
