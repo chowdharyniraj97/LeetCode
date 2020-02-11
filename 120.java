@@ -1,5 +1,3 @@
-//https://leetcode.com/problems/triangle/
-
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         
@@ -23,7 +21,7 @@ class Solution {
         
         int m=Integer.MAX_VALUE;
         for(int i : list){
-            m=Math.min(m,i+findoptimal(triangle,triangle.get(level+1),level+1,maxlevel));
+            m=Math.min(m,Math.abs(i+findoptimal(triangle,triangle.get(level+1),level+1,maxlevel)));
             System.out.println(m);
         }
         return m;
