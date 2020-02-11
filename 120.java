@@ -15,13 +15,14 @@ class Solution {
     }
     
     int findoptimal(List<List<Integer>> triangle,List<Integer> list,int level,int maxlevel,int ind){
-        if(map.containsKey(level+"|"+ind))
-            return map.get(map.get(level+"|"+ind));
+        
         if (level==maxlevel)
         {
             
             return list.get(ind);
         }
+        if(map.containsKey(level+"|"+ind))
+            return map.get(level+"|"+ind);
         
         int a=list.get(ind)+findoptimal(triangle,triangle.get(level+1),level+1,maxlevel,ind);
         if(ind+1<triangle.get(level+1).size())
