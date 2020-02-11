@@ -1,4 +1,27 @@
 //copy this to https://leetcode.com/problems/last-stone-weight-ii/
+// as good as partition into two groups such that their difference in sum is minimum
+
+class Solution {
+    public int lastStoneWeightII(int[] stones) {
+        int sum=0;
+        for(int stone:stones)
+            sum+=stone;
+        return findmin(stones,0,sum,0);
+    }
+    
+    
+    
+     int findmin(int arr[],int s1,int s2,int i){
+        if(i==arr.length)
+            return Math.abs(s1-s2);
+            
+       int sum1=findmin(arr,s1+arr[i],s2-arr[i],i+1);
+       int sum2=findmin(arr,s1,s2,i+1);
+       return Math.min(sum1,sum2);
+    }
+}
+
+//-------------------------------------------dp------------------------------dp----------------------------------------------
 
 class Solution {
     public int lastStoneWeightII(int[] stones) {
