@@ -1,6 +1,16 @@
-//copy this to https://leetcode.com/problems/ones-and-zeroes/
-class Solution {
+    import java.util.*;
+    class Solution{
     HashMap<String,int[]> map;
+
+
+
+    public static void main(String args[]){
+        String str[]={"11","11","0","0","10","1","1","0","11","1","0","111","11111000","0","11","000","1","1","0","00","1","101","001","000","0","00","0011","0","10000"};
+        int m=90;
+        int n=66;
+        Solution obj=new Solution ();
+        System.out.println(obj.findMaxForm(str,m,n));
+    }
     public int findMaxForm(String[] strs, int m, int n) {
         map=new HashMap<>();
         
@@ -42,7 +52,6 @@ class Solution {
             
            
        }
-         return x;
+                       return x;
     }
 }
-
