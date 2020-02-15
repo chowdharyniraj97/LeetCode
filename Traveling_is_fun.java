@@ -50,11 +50,9 @@ public class Solution {
 
     static int[] connectedCities(int n, int g, int[] originCities, int[] destinationCities) {
         UF uf = new UF(n+1);
+        /*the below two for loops are calculating tables from g+1 to g and adding it to the union tree */
         for (int i = g+1; i <= n; i++) {
             for (int j = 2*i; j <= n; j+=i) {
-                if (gcd(i, j) <= g) {
-                    continue;
-                }
                 uf.union(i, j);
             }
         }
