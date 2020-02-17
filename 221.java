@@ -1,4 +1,5 @@
 //https://leetcode.com/problems/maximal-square/
+// Naive solution gives TLE
 class Solution {
     int max=0;
     public int maximalSquare(char[][] matrix) {
