@@ -85,6 +85,38 @@ class Solution {
     
     
 }
+//////////////////////////////////Recursive soln/////////////////////////////////////////////////////////////
+class Solution {
+    int max=-1;
+    public int maximalSquare(char[][] matrix) {
+        if(matrix.length==0)
+            return 0;
+      int memo[][]=new int[matrix.length][matrix[0].length];
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                max=Math.max(max,maximum(matrix,i,j));
+            }
+        }
+        return max*max;
+    }
+    
+    int maximum(char[][]matrix,int i,int j){
+        if(i<0 || j<0)
+            return 0;
+       
+        
+        if(matrix[i][j]=='0')
+            return 0;
+        
+        
+        int ans=Math.min(maximum(matrix,i,j-1),Math.min(maximum(matrix,i-1,j),maximum(matrix,i-1,j-1)))+1;
+      //  System.out.println(ans);
+        
+       //max=Math.max(ans,max);
+        return ans;
+        
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
