@@ -154,3 +154,40 @@ public class Solution {
         return maxsqlen * maxsqlen;
     }
 }
+
+//-------------------------------------MEMO----------------------------------------------------------
+class Solution {
+    int max=-1;
+    public int maximalSquare(char[][] matrix) {
+        if(matrix.length==0)
+            return 0;
+      int memo[][]=new int[matrix.length][matrix[0].length];
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                max=Math.max(max,maximum(matrix,i,j,memo));
+            }
+        }
+        return max*max;
+    }
+    
+    int maximum(char[][]matrix,int i,int j,int memo[][]){
+        if(i<0 || j<0)
+            return 0;
+       
+        
+        if(matrix[i][j]=='0')
+            return 0;
+        if(memo[i][j]!=0)
+            return memo[i][j];
+        
+        
+        int ans=Math.min(maximum(matrix,i,j-1,memo),Math.min(maximum(matrix,i-1,j,memo),maximum(matrix,i-1,j-1,memo)))+1;
+      //  System.out.println(ans);
+        memo[i][j]=ans;
+       //max=Math.max(ans,max);
+        return ans;
+        
+    }
+}
+
+//-----------------------------------------------------------dp------------------------------------------------
