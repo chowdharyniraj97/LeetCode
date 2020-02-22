@@ -56,3 +56,35 @@ static HashMap<Integer,Integer> map;
 
     }
 }
+
+//============================================bottom up============================================
+
+class rodCutting{
+
+ public static void main(String args[]) 
+    { 
+    	
+        int arr[] = new int[] {1, 5, 8, 9, 10, 17, 17, 20,65,123}; 
+        int ans[];
+        int size = arr.length; 
+        ans=new int[size+1];
+        ans[0]=0;
+        System.out.println("Maximum Obtainable Value is "+ 
+                            cutRod(arr, size,ans)); 
+  
+    } 
+
+    static int cutRod(int arr[],int size,int ans[]){
+    	
+    	for(int i=1;i<=size;i++){
+    		ans[i]=arr[i-1];
+    		for(int j=i;j>=1;j--)
+    		{
+    			ans[i]=Math.max(ans[i],arr[j-1]+ans[i-j]);
+    		}
+    		
+    	}
+    	return ans[size];
+
+    }
+}
