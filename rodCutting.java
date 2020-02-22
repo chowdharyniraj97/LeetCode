@@ -75,16 +75,30 @@ class rodCutting{
     } 
 
     static int cutRod(int arr[],int size,int ans[]){
-    	
+    	int index=-1;
+    	int s[]=new int[size+1];
     	for(int i=1;i<=size;i++){
     		ans[i]=arr[i-1];
+    		 s[i] = i;
     		for(int j=i;j>=1;j--)
     		{
-    			ans[i]=Math.max(ans[i],arr[j-1]+ans[i-j]);
+    			if(ans[i]<arr[j-1]+ans[i-j]){
+    			    			ans[i]=arr[j-1]+ans[i-j];
+    			    			s[i]=j;
+
+
+    			    		}
     		}
     		
     	}
-    	return ans[size];
+    	int sk=size;
+    	while(size>0)
+    	{
+    		System.out.print(s[size]+" ");
+    		size-=s[size];
+    	}
+    	System.out.println();
+    	return ans[sk];
 
     }
 }
