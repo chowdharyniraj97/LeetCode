@@ -1,81 +1,63 @@
-class Trie{
-    boolean end;
-    Trie [] letter;
-    Trie(){
-        letter=new Trie[27];
-        end=false;
-    }
-    
-}
-class WordDictionary {
-Trie root;
-    /** Initialize your data structure here. */
-    public WordDictionary() {
-        root=new Trie();
-        
-    }
-    
-    /** Adds a word into the data structure. */
+//https://leetcode.com/problems/add-and-search-word-data-structure-design/
+public class WordDictionary {
+    WordNode root = new WordNode();
     public void addWord(String word) {
-       addit(word,0,word.length(),root);
-       if(root.letter[26]==null){
-           root.letter[26]=new Trie();
-           addit(word,1,word.length(),root.letter[26]);
-       }
-        else{
-             addit(word,1,word.length(),root.letter[26]);
-        }
+        char chars[] = word.toCharArray();
+        addWord(chars, 0, root);
     }
     
-    public void addit(String word,int index,int len,Trie cur){
-        if(index==len){
-            cur.end=true;
+    private void addWord(char[] chars, int index, WordNode parent) {
+        char c = chars[index];
+        int idx = c-'a';
+        WordNode node = parent.children[idx];
+        if (node == null){
+            node = new WordNode();
+            parent.children[idx]=node;
+        }
+        if (chars.length == index+1){
+            node.isLeaf=true;
             return;
         }
-        char c=word.charAt(index);
-        if(cur.letter[c-'a']==null){
-            cur.letter[c-'a']=new Trie();
-            addit(word,index+1,len,cur.letter[c-'a']);
-            
-        }
-        else{
-             addit(word,index+1,len,cur.letter[c-'a']);
-        }
-       
-        if(cur.letter[26]==null){
-           cur.letter[26]=new Trie();
-           addit(word,index+1,len,cur.letter[26]);
-        }
-        else{
-             addit(word,index+1,len,cur.letter[26]);
-        }
-            
-        
+        addWord(chars, ++index, node);
+    }
+
+
+    public boolean search(String word) {
+        return search(word.toCharArray(), 0, root);                  
     }
     
-    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
-    public boolean search(String word) {
-        Trie cur=root;
-        for(int i=0;i<word.length()&&cur!=null;i++){
-            char c=word.charAt(i);
-            
-            if(c!='.' && cur.letter[c-'a']!=null){
-                cur=cur.letter[c-'a'];
+    private boolean search(char[] chars, int index, WordNode parent){
+        if (index == chars.length){
+            if (parent.isLeaf){
+                return true;
             }
-    
-            else if(c=='.'&&cur.letter[26]!=null){
-                cur=cur.letter[26];
-            }
-            else 
-                return false;
+            return false;
         }
-        return cur.end;
+        WordNode[] childNodes = parent.children;
+        char c = chars[index];
+        if (c == '.'){
+            for (int i=0;i<childNodes.length;i++){
+                WordNode n = childNodes[i];
+                if (n !=null){
+                    boolean b = search(chars, index+1, n);
+                    if (b){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        WordNode node = childNodes[c-'a'];
+        if (node == null){
+            return false;
+        }
+        return search(chars, ++index, node);
+    }
+    
+
+    
+    private class WordNode{
+        boolean isLeaf;
+        WordNode[] children = new WordNode[26];
     }
 }
-
-/**
- * Your WordDictionary object will be instantiated and called as such:
- * WordDictionary obj = new WordDictionary();
- * obj.addWord(word);
- * boolean param_2 = obj.search(word);
- */
