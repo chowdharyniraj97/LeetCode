@@ -1,19 +1,19 @@
 //https://leetcode.com/problems/dice-roll-simulation/
-
 class Solution {
     HashMap<String,Integer> map;
+    final long divisor = (long)Math.pow(10, 9) + 7;
     public int dieSimulator(int n, int[] rollMax) {
         map=new HashMap<>();
         String k="";
-        int ans=0;
+        long ans=0;
         for(int i=0;i<6;i++){
-            ans+=simulatedice(n-1,rollMax[i]-1,i,rollMax,(i+1)+k);
+            ans=(ans+simulatedice(n-1,1,i,rollMax))%divisor;
         }
-        return ans;
+        return (int)ans;
     }
     
     
-    public int simulatedice(int n,int count,int nos,int[] rollmax,String k){
+    public int simulatedice(int n,int count,int nos,int[] rollmax){
         if(n==0){
            // System.out.println(k);
             return 1;
@@ -22,17 +22,17 @@ class Solution {
         if(map.containsKey(nos+" "+n+" "+count))
             return map.get(nos+" "+n+" "+count);
             
-        int x=0;
+        long x=0;
         for(int i=0;i<6;i++){
             // if(nos==i && count==0)
             //     continue;
-            if(i==nos && count>0){//handling consecutive case
-            x+=simulatedice(n-1,count-1,i,rollmax,(i+1)+k);
+            if(i==nos && count<rollmax[i]){//handling consecutive case
+            x=(x+simulatedice(n-1,count+1,i,rollmax)%divisor)%divisor;
             }
             else if(i!=nos)
-                x+=simulatedice(n-1,rollmax[i]-1,i,rollmax,(i+1)+k);
+                x=(x+simulatedice(n-1,1,i,rollmax)%divisor)%divisor;
         }
-        map.put(nos+" "+n+" "+count,x);
-        return x;
+        map.put(nos+" "+n+" "+count,(int)x);
+        return (int)x;
     }
 }
