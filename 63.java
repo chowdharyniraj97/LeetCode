@@ -24,3 +24,33 @@ class Solution {
         
     }
 }
+
+//space efficient soln
+
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int n=obstacleGrid[0].length;
+        int m=obstacleGrid.length;
+        if(obstacleGrid[0][0]==1||obstacleGrid[m-1][n-1]==1)
+            return 0;
+        int grid[]=new int[obstacleGrid[0].length];
+        grid[0]=1;
+        for(int i=1;i<obstacleGrid[0].length;i++){
+            
+            if(obstacleGrid[0][i]==0)
+                grid[i]=grid[i-1];
+        }
+        for(int i=1;i<obstacleGrid.length;i++){
+            if(obstacleGrid[i][0]==1)
+                grid[0]=0;
+            for(int j=1;j<obstacleGrid[0].length;j++){
+                if(obstacleGrid[i][j]==1){
+                    grid[j]=0;
+                    continue;
+                }
+                grid[j]=grid[j]+grid[j-1];
+            }
+        }
+        return grid[obstacleGrid[0].length-1];
+    }
+}
