@@ -1,40 +1,43 @@
-
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        int ch[]={2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101};
-        
-        int target=1;
-        for(char c : s1.toCharArray())
-            target*=ch[c-'a'];
-        
-        
+        int ch[]=new int[26];
+        int temp[]=new int[26];
+        boolean found=true;
+        for(char c : s1.toCharArray()){
+            ch[c-'a']++;
+            temp[c-'a']++;
+        }
         int i=0;
         int j=s1.length();
-        int cur=1;
-        for(int k=i;k<j;k++){
-            cur*=ch[s2.charAt(k)-'a'];
-        }
-        if(cur==target)
-            return true;
-        int len=s1.length();
-        cur=cur/(ch[s2.charAt(i)-'a']);
-            i++;
-            j++;
-        while(j<s2.length()){
+        int ii=0;
+        int jj=s1.length();
+        while(j<=s2.length()){
+            for(int k=i;k<j;k++){
+                char x=s2.charAt(k);
+                temp[x-'a']--;
+            }
             
-            cur*=ch[s2.charAt(j)-'a'];
-            if(cur==target)
+            for(int ind : temp){
+                if(ind<0||ind >0)
+                {
+                    found=false;
+                    for(int o=0;o<26;o++){
+                        temp[o]=ch[o];
+                    }
+                    i++;
+                    j++;
+                    break;
+                }
+            
+            }
+            if(found)
                 return true;
-            cur=cur/(ch[s2.charAt(i)-'a']);
-            i++;
-            j++;
+            
+            found=true;
+    
         }
-        cur=1;
-        for(int k=i;k<j;k++){
-            cur*=ch[s2.charAt(k)-'a'];
-        }
-        if(cur==target)
-            return true;
         return false;
+        
+        
     }
 }
