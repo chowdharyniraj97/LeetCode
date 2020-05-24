@@ -1,4 +1,3 @@
-
 class Solution {
     public int countSquares(int[][] matrix) {
         int total=0;
@@ -11,7 +10,7 @@ class Solution {
                     
                     
                  while(refi<matrix.length && refj<matrix[0].length&&matrix[refi][refj]==1){
-                     int ui=refi;
+                    int ui=refi;
                     int uj=refj;
                     int li=refi;
                     int lj=refj;
@@ -31,11 +30,14 @@ class Solution {
                     
                     if(sq){
                         total++;
-                    
-                    }
                     refi++;
                     refj++;
                     len++;
+                    
+                    }
+                     else
+                         break;
+                   
                      
                  }
             }
