@@ -26,3 +26,4 @@ class Solution {
         return Math.min(local,local1);
     }
 }
+//O(n3)
