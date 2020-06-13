@@ -1,4 +1,3 @@
-
 class Point{
     int x,y;
      int dist;
@@ -10,34 +9,25 @@ class Point{
 }
 
 class Solution {
+       int ans[][];
+        int gg=0;
     public int[][] kClosest(int[][] points, int k) {
         int K=k;
-        PriorityQueue<Point> pq=new PriorityQueue(new mySort());
-        
+        gg=k;
+           ans=new int[K][2];
+           
+        Point klist[]=new Point[points.length];
+           
         for(int i=0;i<points.length;i++){
-             int d=dist(points[i][0],points[i][1]);
+            klist[i]=new Point(dist(points[i][0],points[i][1]),points[i][0],points[i][1]);
             
-            if(k==0){
-               
-                if(d<pq.peek().dist)
-                {
-                    pq.poll();
-                    pq.add(new Point(d,points[i][0],points[i][1]));
-                }
-            }
-            else{
-                pq.add(new Point(d,points[i][0],points[i][1]));
-                k--;
-            }
         }
+           
+        int low=0;int high=points.length-1;
         
-        int ans[][]=new int[K][2];
-        for(int i=0;i<K;i++){
-            Point p=pq.poll();
-            ans[i][0]=p.x;
-            ans[i][1]=p.y;
-        }
-        return ans;
+         quickselect(klist,low,high);
+         return ans;
+        
     }
     
     
@@ -46,17 +36,56 @@ class Solution {
         return (x*x)+(y*y);
         
     }
-}
-
-
-class mySort implements Comparator<Point>{
-    public int compare(Point p1,Point p2){
-        int d1=p1.x*p1.x+p1.y*p1.y;
-        int d2=p2.x*p2.x+p2.y*p2.y;
-        if(d1<d2)
-            return 1;
-        else if(d1>d2)
-            return -1;
-        return 0;
+    
+    int sort(Point[] list,int low,int high,int current){
+        
+        int pindex=low;
+        int i=low;
+        
+        while(i<=high){
+            if(list[i].dist<=list[current].dist){
+                Point temp=list[pindex];
+                list[pindex]=list[i];
+                list[i]=temp;
+                pindex++;
+            }
+          
+            i++;
+            
+            
+        }
+         Point temp=list[pindex];
+                list[pindex]=list[current];
+                list[current]=temp;
+        
+        return pindex;
+        
+        
+    }
+    
+    void quickselect(Point[] klist,int low,int high){
+        while(low<=high){
+            int p= sort(klist,0,high-1,high);
+            System.out.println(p);
+            if(p<gg-1){
+                quickselect(klist,p+1,high);
+                return;
+            }
+            else if(p>gg-1){
+                 quickselect(klist,low,p-1);
+                return;
+                
+            }
+            
+            else  {
+                 for(int i=0;i<gg;i++){
+                    ans[i][0]=klist[i].x;
+                    ans[i][1]=klist[i].y;
+                    }
+                  return;
+         }
+                
+        }
     }
 }
+
