@@ -1,36 +1,54 @@
 class Solution {
-    String ans="";
-    int max=-1;
-    HashMap<String,Integer> map;
     public String longestDupSubstring(String S) {
-        map=new HashMap<>();
-        
-        findLongest(S,S,0,0);
-        return ans;
+        int start = 0;
+        int end = S.length() - 1;
+        String result = "";
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            String dupSubstring = dupSubstring(S, mid); // check if any dupSubstring of mid size
+            if (dupSubstring != null) {
+                start = mid + 1;
+                result = dupSubstring;
+                return result;
+            } else end = mid - 1;
+        }
+
+        return result;
     }
-    
-    
-    int findLongest(String s1,String s2,int i,int j){
-        if(i==s1.length()||j==s2.length())
-            return 0;
-        if(map.containsKey(i+"|"+j))
-            return map.get(i+"|"+j);
-        
-        
-        if(i!=j && s1.charAt(i)==s2.charAt(j)){
-            int x=1+findLongest(s1,s2,i+1,j+1);
-            if(x>max){
-                max=x;
-                ans=s1.substring(i,i+x);
-            }
-            map.put(i+"|"+j,x);
-            return x;
+
+    private String dupSubstring(String s, int m) {
+        int R = 31; // prime
+        Map<Long, List<Integer>> map = new HashMap<>(); // why Map<Long, List<Integer>> ? with this we will keep index of all string of having same hash.
+
+        long patHash = hash(s, m, R);
+        map.putIfAbsent(patHash, new ArrayList());
+        map.get(patHash).add(0);
+
+        // pre-compute R^(m-1) % q for use in removing leading digit
+        long RM = 1;
+        for (int i = 1; i <= m - 1; i++)
+            RM = (R * RM);
+
+        for (int i = m; i < s.length(); i++) {
+            // Remove leading digit, add trailing digit, check for match.
+            patHash = (patHash - RM * s.charAt(i - m));
+            patHash = (patHash * R + s.charAt(i));
+            if (map.containsKey(patHash)) {
+                for(int index: map.get(patHash)) 
+                    if(s.substring(index, index + m).equals(s.substring(i - m + 1, i + 1)))
+                        return s.substring(i - m + 1, i + 1);
+            } 
+            map.putIfAbsent(patHash, new ArrayList());
+            map.get(patHash).add(i - m + 1);
         }
-        else{
-            findLongest(s1,s2,i+1,j);
-            findLongest(s1,s2,i,j+1);
-            map.put(i+"|"+j,0);
-            return 0;
-        }
+
+        return null;
+    }
+
+    private long hash(String s, int m, int R) {
+        long h = 0;
+        for (int j = 0; j < m; j++)
+            h = (R * h + s.charAt(j));
+        return h;
     }
 }
