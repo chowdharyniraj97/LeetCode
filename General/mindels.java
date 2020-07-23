@@ -1,26 +1,32 @@
 class Solution {
-    HashMap<String,Integer> map;
     public int minDistance(String word1, String word2) {
-        map=new HashMap<>();
-        return minimum(word1,word2,0,0);
-    }
-    
-    int minimum(String w1,String w2,int i,int j){
-        if(i==w1.length() &&j==w2.length()) // "" ""
-            return 0;
-        if(i==w1.length())
-            return w2.length()-j;
-        if(j==w2.length())
-            return w1.length()-i;
-        if(map.containsKey(i+"|"+j))
-            return map.get(i+"|"+j);
-        if(w1.charAt(i)!=w2.charAt(j))
-        {
-            int ans=1+Math.min(minimum(w1,w2,i+1,j),minimum(w1,w2,i,j+1));
-            map.put(i+"|"+j,ans);
-            return ans;
+        int dp[][]=new int[word1.length()+1][word2.length()+1];// to include empty strings as well
+            
+        char w1[]=word1.toCharArray();
+        char w2[]=word2.toCharArray();
+        
+        //set our base case
+        //row
+        dp[0][0]=0; // case "" ""
+        for(int i=1;i<dp[0].length;i++){
+            dp[0][i]=i;
         }
-        else
-            return minimum(w1,w2,i+1,j+1);
+        //col
+         for(int i=1;i<dp.length;i++){
+            dp[i][0]=i;
+        }
+            
+        
+        for(int i=1;i<=w1.length;i++)
+        {
+            for(int j=1;j<=w2.length;j++){
+                if(w1[i-1]!=w2[j-1])
+                    dp[i][j]=1+Math.min(dp[i-1][j],dp[i][j-1]);
+                else
+                    dp[i][j]=dp[i-1][j-1];
+            }
+        }
+        
+        return dp[w1.length][w2.length];
     }
 }
