@@ -1,6 +1,7 @@
 class Solution {
+    HashMap<Integer,List<List<String>>> map;
     public List<List<String>> partition(String s) {
-        
+        map=new HashMap<>();
         return findpals(s,0,s.length());
     }
     public List<List<String>> findpals(String s,int start,int len){
@@ -10,6 +11,14 @@ class Solution {
             List<String> st = new ArrayList<>();
             empty.add(st);
             return empty;
+        }
+        if(map.containsKey(start)){
+            List<List<String>> x = new ArrayList<>();
+            List<List<String>> memo = map.get(start);
+            for(List<String> cur : memo){
+                x.add(new ArrayList<>(cur));
+            }
+            return x;
         }
          List<List<String>> level = new ArrayList<>();
         for(int i=start+1;i<=len;i++){
@@ -21,10 +30,14 @@ class Solution {
                     cur.add(0,sub);
                     level.add(cur);
                 }
-                
-                
+               
             }
         }
+        List<List<String>> memo = new ArrayList<>();
+        for(List<String> cur : level){
+                memo.add(new ArrayList<>(cur));
+            }
+        map.put(start,memo);
         return level;
         
         
